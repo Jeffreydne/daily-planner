@@ -10,7 +10,9 @@ A calendar for the keeping track of time during a standard 9AM - 5 PM workday
 | CSS     | [https://developer.mozilla.org/en-US/docs/Web/CSS](https://developer.mozilla.org/en-US/docs/Web/CSS)      |
 | JavaScript     | [https://developer.mozilla.org/en-US/docs/Web/JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript)      |   
 | Git | [https://git-scm.com/](https://git-scm.com/)     |    
-| Day.js | [https://https://day.js.org//](https://https://day.js.org//)     | 
+| Day.js | [https://day.js.org/](https://day.js.org/)     |
+| jQuery | [https://jquery.com/](https://jquery.com/)     | 
+| Bootstrap | [https://getbootstrap.com/](https://getbootstrap.com/)     |  
 ---
 
 ## Description
