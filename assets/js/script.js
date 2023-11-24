@@ -2,7 +2,37 @@
 $(document).ready(function () {
   console.log("Iam working");
  //jQuery DOM variables
- const today
+ const currentDday = $('#currentDay');
+ const hour9 = $('#hour-9 .description');
+ const hour10 = $('#hour-10 .description');
+ const hour11 = $('#hour-11 .description');
+ const hour12 = $('#hour-12 .description');
+ const hour1 = $('#hour-1 .description');
+ const hour2 = $('#hour-2 .description');
+ const hour3 = $('#hour-3 .description');
+ const hour4 = $('#hour-4 .description');
+ const hour5 = $('#hour-5 .description');
+
+//other variables
+let now = dayjs();
+console.log(now);
+//functions
+// display today's date in header
+// CONSIDER CHANGING TO DISPLAY 1ST, SND, 3RD, 4TH ETC AS DAY
+function displayToday() {
+currentDday.text(now.format('dddd, MMMM D'));
+}
+function domQues() {
+console.log(hour9.val());
+}
+
+
+//call function to display today
+displayToday();
+domQues();
+//eventListeners
+
+
   // TODO: Add code to display the current date in the header of the page.
   //
 
