@@ -3,6 +3,7 @@ $(document).ready(function () {
   console.log("Iam working");
  //jQuery DOM variables
  const currentDday = $('#currentDay');
+ const timeBlockArr = $('.time-block');
  const hour9 = $('#hour-9 .description');
  const hour10 = $('#hour-10 .description');
  const hour11 = $('#hour-11 .description');
@@ -13,22 +14,47 @@ $(document).ready(function () {
  const hour4 = $('#hour-4 .description');
  const hour5 = $('#hour-5 .description');
 
+ console.log(timeBlockArr);
 //other variables
 let now = dayjs();
 console.log(now);
+// planner hour to be used in styleHours fxn
+let plannerHour;
 //functions
 // display today's date in header
 // CONSIDER CHANGING TO DISPLAY 1ST, SND, 3RD, 4TH ETC AS DAY
 function displayToday() {
 currentDday.text(now.format('dddd, MMMM D'));
 }
+
+function styleHours() {
+  let hourNow = Number(now.format('h'));
+  $.each(timeBlockArr, function( i, value) {
+    plannerHour = Number(timeBlockArr[i]['id'].replace('hour-', ''));
+    console.log(plannerHour);
+
+    if(plannerHour < hourNow) {
+
+    } else if(plannerHour > hourNow) {
+
+    } else {
+      
+    }
+  });
+  console.log(hourNow);
+}
+//ERASE domQues- used only for confirmation
+console.log(timeBlockArr[0]['id']);
 function domQues() {
 console.log(hour9.val());
 }
-
+//PROBABLY NEED TO MOVE THIS
+styleHours();
 
 //call function to display today
 displayToday();
+
+//ERASE domQues- used only for confirmation
 domQues();
 //eventListeners
 
