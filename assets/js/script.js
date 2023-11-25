@@ -27,49 +27,72 @@ let hourIndx;
 function displayToday() {
 currentDday.text(now.format('dddd, MMMM D'));
 }
-// 3 functions to replace the class past, present or future which will be called if that needs to be changed. A jQuery DOM element is combined with a vanilla JS method because the JS will replace all the members of the class preventing adding classes over previous classes
-function addGreen() {
-  timeBlockArr[0].className = "row time-block future";
+// 2 functions to replace the class past, and/or future which will be called in fxn styleHours() when the div with class= "time-block" needs to be changed. A jQuery DOM element array is combined with a vanilla JS method because the JS will replace all the members of the class preventing adding classes over previous classes
+function addGreen(indx) {
+  timeBlockArr[indx].className = "row time-block future";
 }
-function addRed() {
-  timeBlockArr[4].className = "row time-block present";
+// function addRed(indx) {
+//   timeBlockArr[indx].className = "row time-block present";
+// }
+function addGray(indx) {
+  timeBlockArr[indx].className = "row time-block past";
 }
-function addGray() {
-  timeBlockArr[6].className = "row time-block past";
-}
-addRed();
-addGreen();
-addGray();
-// function styleHours() {
-//   let hourNow = Number(now.format('H'));
-//     if(hourNow < 9) {
-//       let greenIndexStart = 0;
-//       let greenIndxLimit = 9;
-//     } else if(hourNow > 17) {
-//       let grayIndexStart = 0;
-//       let grayIndexLimit = 9;
-//     } else if (hourNow === 9) {
-//       let redIndex = 0;
-//       // let grayIndexStart = 0;
-//       // let grayIndexLimit = hourNow - 9;
-//       let greenIndexStart = 1;
-//       let greenIndxLimit = 9;
-//     } else if(hourNow === 17) {
-//       let redIndex = 8;
-//       let grayIndexStart = 0;
-//       let grayIndexLimit = 9;
-//     } else (hourNow < 17) {
-//       let redIndex = hourNow - 9;
-//       let grayIndexStart = 0;
-//       let grayIndexLimit = hourNow - 9;
-//       let greenIndexStart = hourNow - 8;
-//       let greenIndxLimit = 9;
-//     } 
-
-
+// addRed();
+// addGreen(indx);
+// addGray();
+function styleHours() {
+  //use dayjs() saved above in the variable now to find current hour on 24 hour clock
+  let hourNow = Number(now.format('H'));
+  // if time is < 0900 call addGreen in a for loop to color all time slots green
+    if(hourNow < 9) {
+      for(let i = 0; i < 9; i++) {
+        addGreen(i);
+      }
+    } 
+    // if time is > 1700 call addGray in a for loop to color all time slots gray
+    else if(hourNow > 17) {
+      for(let i = 0; i < 9; i++) {
+        addGray(i);
+      }
+    } 
+    // if time is exactly 0900 then 9AM block is set to red and all other blocks set to green with for loop
+    else if (hourNow === 9) {
+      timeBlockArr[0].className = "row time-block present";
+      for(let i = 1; i < 9; i++) {
+        addGreen(i);
+      }
+    } 
+      // if time is exactly 1700 then 5PM block is set to red and all other blocks set to gray with for loop
+    else if(hourNow === 17) {
+      timeBlockArr[8].className = "row time-block present";
+      for(let i = 0; i < 8; i++) {
+        addGray(i);
+      }
+    } 
+    // if none of the above statements are true then time will be >= 10AM && time <= 4PM. In that case the present call will be added to the present hour, all previous hours on planner will be made gray, and all future hours will be made green 
+    else {
+      timeBlockArr[hourNow - 9].className = "row time-block present";
+      for(let i = 0; i < hourNow - 9; i++) {
+        addGray(i);
+      }
+      for(let i = hourNow - 8; i < 9; i++) {
+        addGreen(i);
+      }
+      // let grayIndexStart = 0;
+      // let grayIndexLimit = hourNow - 9;
+      // let greenIndexStart = hourNow - 8;
+      // let greenIndxLimit = 9;
+    } 
     // else {
-    //   let redIndex = hourNow + 3;
-    // }
+    //   timeBlockArr[hourNow + 3].className = "row time-block present";
+    //   for(let i = 0; i < hourNow + 3; i++) {
+    //     addGray(i);
+    //   }
+    //   for(let i = hourNow + 4; i < 9; i++) {
+    //     addGreen(i);
+    //   }
+      // let redIndex = hourNow + 3;
+    }
   // $.each(timeBlockArr, function( i, value) {
 
     // plannerHour = Number(timeBlockArr[i]['id'].replace('hour-', ''));
@@ -88,14 +111,14 @@ addGray();
 
 
 //   console.log(hourNow);
-// }
+
 //ERASE domQues- used only for confirmation
 console.log(timeBlockArr[0]['id']);
 function domQues() {
 console.log(hour9.val());
 }
 //PROBABLY NEED TO MOVE THIS
-// styleHours();
+styleHours();
 
 //call function to display today
 displayToday();
