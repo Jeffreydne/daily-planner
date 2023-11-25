@@ -15,35 +15,32 @@ $(document).ready(function () {
  const hour5 = $('#hour-5 .description');
 
  console.log(timeBlockArr);
-//other variables
-let now = dayjs();
-console.log(now);
-// planner hour to be used in styleHours fxn
-// let plannerHour;
-let hourIndx;
-//functions
-// display today's date in header
-// CONSIDER CHANGING TO DISPLAY 1ST, SND, 3RD, 4TH ETC AS DAY
-function displayToday() {
-currentDday.text(now.format('dddd, MMMM D'));
-}
-// 2 functions to replace the class past, and/or future which will be called in fxn styleHours() when the div with class= "time-block" needs to be changed. A jQuery DOM element array is combined with a vanilla JS method because the JS will replace all the members of the class preventing adding classes over previous classes
-function addGreen(indx) {
-  timeBlockArr[indx].className = "row time-block future";
-}
-// function addRed(indx) {
-//   timeBlockArr[indx].className = "row time-block present";
-// }
-function addGray(indx) {
-  timeBlockArr[indx].className = "row time-block past";
-}
-// addRed();
-// addGreen(indx);
-// addGray();
-function styleHours() {
-  //use dayjs() saved above in the variable now to find current hour on 24 hour clock
-  let hourNow = Number(now.format('H'));
-  // if time is < 0900 call addGreen in a for loop to color all time slots green
+  //other variables
+  let now = dayjs();
+  console.log(now);
+  // planner hour to be used in styleHours fxn
+  // let plannerHour;
+  let hourIndx;
+  //functions
+  // display today's date in header
+  // CONSIDER CHANGING TO DISPLAY 1ST, 2ND, 3RD, 4TH ETC AS DAY
+  function displayToday() {
+  currentDday.text(now.format('dddd, MMMM D'));
+  }
+  // 2 functions to replace the class past, and/or future which will be called in fxn styleHours() when the div with class= "time-block" needs to be changed. A jQuery DOM element array is combined with a vanilla JS method because the JS will replace all the members of the class preventing adding classes over previous classes
+  function addGreen(indx) {
+    timeBlockArr[indx].className = "row time-block future";
+  }
+  function addGray(indx) {
+    timeBlockArr[indx].className = "row time-block past";
+  }
+  // styleHours to be called to add appropriate color to each timeslot by changing the class to past, present, or future as indicated by current time
+
+  //CONSIDER ADDING A setInterval FXN TO CHECK FOR A NEW HOUR PERIODICALLY
+  function styleHours() {
+    //use dayjs() saved above in the variable now to find current hour on 24 hour clock
+    let hourNow = Number(now.format('H'));
+    // if time is < 0900 call addGreen in a for loop to color all time slots green
     if(hourNow < 9) {
       for(let i = 0; i < 9; i++) {
         addGreen(i);
@@ -69,7 +66,7 @@ function styleHours() {
         addGray(i);
       }
     } 
-    // if none of the above statements are true then time will be >= 10AM && time <= 4PM. In that case the present call will be added to the present hour, all previous hours on planner will be made gray, and all future hours will be made green 
+      // if none of the above statements are true then time will be >= 10AM && time <= 4PM. In that case the present call will be added to the present hour, all previous hours on planner will be made gray, and all future hours will be made green 
     else {
       timeBlockArr[hourNow - 9].className = "row time-block present";
       for(let i = 0; i < hourNow - 9; i++) {
@@ -78,54 +75,15 @@ function styleHours() {
       for(let i = hourNow - 8; i < 9; i++) {
         addGreen(i);
       }
-      // let grayIndexStart = 0;
-      // let grayIndexLimit = hourNow - 9;
-      // let greenIndexStart = hourNow - 8;
-      // let greenIndxLimit = 9;
     } 
-    // else {
-    //   timeBlockArr[hourNow + 3].className = "row time-block present";
-    //   for(let i = 0; i < hourNow + 3; i++) {
-    //     addGray(i);
-    //   }
-    //   for(let i = hourNow + 4; i < 9; i++) {
-    //     addGreen(i);
-    //   }
-      // let redIndex = hourNow + 3;
-    }
-  // $.each(timeBlockArr, function( i, value) {
+  }
+  //PROBABLY NEED TO MOVE THIS
+  styleHours();
 
-    // plannerHour = Number(timeBlockArr[i]['id'].replace('hour-', ''));
-    // console.log(plannerHour, timeBlockArray[i]);
+  //call function to display today
+  displayToday();
 
-    // if(plannerHour < hourNow) {
-    //   timeBlockArr[i].addClass('past');
-    // } else if(plannerHour > hourNow) {
-    //   timeBlockArr[i].addClass('future');
-    // } else {
-    //   timeBlockArr[i].addClass('present');
-    // }
-
-
-  // });
-
-
-//   console.log(hourNow);
-
-//ERASE domQues- used only for confirmation
-console.log(timeBlockArr[0]['id']);
-function domQues() {
-console.log(hour9.val());
-}
-//PROBABLY NEED TO MOVE THIS
-styleHours();
-
-//call function to display today
-displayToday();
-
-//ERASE domQues- used only for confirmation
-domQues();
-//eventListeners
+  //eventListeners
 
 
   // TODO: Add code to display the current date in the header of the page.
