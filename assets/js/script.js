@@ -17,17 +17,14 @@ $(document).ready(function () {
  console.log(timeBlockArr);
   //other variables
   let now = dayjs();
-  console.log(now);
-  // planner hour to be used in styleHours fxn
-  // let plannerHour;
-  let hourIndx;
+ 
   //functions
-  // display today's date in header
+  // display today's date in header using dayjs() formatting. 
   // CONSIDER CHANGING TO DISPLAY 1ST, 2ND, 3RD, 4TH ETC AS DAY
   function displayToday() {
   currentDday.text(now.format('dddd, MMMM D'));
   }
-  // 2 functions to replace the class past, and/or future which will be called in fxn styleHours() when the div with class= "time-block" needs to be changed. A jQuery DOM element array is combined with a vanilla JS method because the JS will replace all the members of the class preventing adding classes over previous classes
+  // 2 functions to replace the class to  past, and/or future - which will be called in fxn styleHours() when the div with class= "time-block" needs to be changed. A jQuery DOM element array is combined with a vanilla JS method because the JS will replace all the members of the class preventing adding classes over previous classes
   function addGreen(indx) {
     timeBlockArr[indx].className = "row time-block future";
   }
@@ -38,7 +35,11 @@ $(document).ready(function () {
 
   //CONSIDER ADDING A setInterval FXN TO CHECK FOR A NEW HOUR PERIODICALLY
   function styleHours() {
-    //use dayjs() saved above in the variable now to find current hour on 24 hour clock
+    //IS RESET NEEDED?? Probably not -if not delete this comment & reset now = dayjs() below
+
+    //reset now variable to current time then 
+    // use dayjs() saved above in the variable now to find current hour on 24 hour clock
+    now = dayjs();
     let hourNow = Number(now.format('H'));
     // if time is < 0900 call addGreen in a for loop to color all time slots green
     if(hourNow < 9) {
@@ -77,6 +78,20 @@ $(document).ready(function () {
       }
     } 
   }
+
+  //saveInput fxn called by button click below. Saves user's input into local Storage
+  function saveInput(event) {
+    // console.log("this is input");
+
+  
+      $(event.currentTarget).parent().children().val("Hello");
+  
+  
+
+    console.log(event.currentTarget);
+    // .children[1].val("Working?")
+    
+  }
   //PROBABLY NEED TO MOVE THIS
   styleHours();
 
@@ -84,16 +99,21 @@ $(document).ready(function () {
   displayToday();
 
   //eventListeners
+// Delegate event listener to the parent element, <div class='time-block> and use class ='.saveBtn' as 2nd argument in eventListener fxn to target each individual saveBtn. After preventing default this will call the style hours xn to be sure the styling is updated to reflect current time. and it will save user's input to local storage.
+timeBlockArr.on('click', '.saveBtn', function (event) {
+  event.preventDefault();
+  styleHours();
+  saveInput(event);
+
+  // get letter from clicked letter button's `data-letter` attribute and use it for display
+
+  // displayLetterEl.text($(event.target).attr('data-letter'));
+  // displayEl.append(displayLetterEl);
+
+});
 
 
-  // TODO: Add code to display the current date in the header of the page.
-  //
-
-  // TODO: Add code to apply the past, present, or future class to each time
-  // block by comparing the id to the current hour. HINTS: How can the id
-  // attribute of each time-block be used to conditionally add or remove the
-  // past, present, and future classes? How can Day.js be used to get the
-  // current hour in 24-hour time?
+ 
   //
   // TODO: Add code to get any user input that was saved in localStorage and set
   // the values of the corresponding textarea elements. HINT: How can the id
