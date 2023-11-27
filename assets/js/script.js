@@ -1,6 +1,5 @@
 
 $(document).ready(function () {
-  console.log("Iam working");
  //jQuery DOM variables
  const currentDay = $('#currentDay');
  const timeBlockArr = $('.time-block');
@@ -14,16 +13,29 @@ $(document).ready(function () {
  const hour16 = $('#hour-16 .description');
  const hour17 = $('#hour-17 .description');
 
- console.log(timeBlockArr);
   //other variables
   let now = dayjs();
  
   //functions
-  // display today's date in header using dayjs() formatting. 
-  // CONSIDER CHANGING TO DISPLAY 1ST, 2ND, 3RD, 4TH ETC AS DAY
+  // display today's date in header using dayjs() formatting. Then call fxn fillCalendar to add any stored schedule items into appropriate textArea
   function displayToday() {
   currentDay.text(now.format('dddd, MMMM D'));
+  fillCalendar();
   }
+  
+  // fillCalendar will add any schedule items in local storage into the appropriate textArea
+  function fillCalendar() {
+    hour9.val(localStorage.getItem('hour-9'));
+    hour10.val(localStorage.getItem('hour-10'));
+    hour11.val(localStorage.getItem('hour-11'));
+    hour12.val(localStorage.getItem('hour-12'));
+    hour13.val(localStorage.getItem('hour-13'));
+    hour14.val(localStorage.getItem('hour-14'));
+    hour15.val(localStorage.getItem('hour-15'));
+    hour16.val(localStorage.getItem('hour-16'));
+    hour17.val(localStorage.getItem('hour-17'));
+  }
+
   // 2 functions to replace the class to  past, and/or future - which will be called in fxn styleHours() when the div with class= "time-block" needs to be changed. A jQuery DOM element array is combined with a vanilla JS method because the JS will replace all the members of the class preventing adding classes over previous classes
   function addGreen(indx) {
     timeBlockArr[indx].className = "row time-block future";
@@ -32,8 +44,6 @@ $(document).ready(function () {
     timeBlockArr[indx].className = "row time-block past";
   }
   // styleHours to be called to add appropriate color to each timeslot by changing the class to past, present, or future as indicated by current time
-
-  //CONSIDER ADDING A setInterval FXN TO CHECK FOR A NEW HOUR PERIODICALLY
   function styleHours() {
     //reset now variable (declared above)to current time using dayjs() , then use its format method to find current hour on 24 hour clock
     now = dayjs();
@@ -78,7 +88,7 @@ $(document).ready(function () {
 
   //saveInput fxn called by button click below. Saves user's input into local Storage
   function saveInput(event) {
-    // To find which button was pressed use event.currentTarget.parent() then store the contents of the associated text area with the name = the id attribute value using a switch statement
+      // To find which button was pressed use event.currentTarget.parent() then store the contents of the associated text area with the name = the id attribute value using a switch statement
       let textboxParent = $(event.currentTarget).parent();
 
       let storageName = textboxParent.attr('id')
@@ -111,66 +121,22 @@ $(document).ready(function () {
         case 'hour-17':
           localStorage.setItem(storageName, hour17.val());
           break;
-          default: console.log('something wen wrong');
+        default: console.log('something went wrong');
       }
-
-  
-      console.log(storageName, localStorage.getItem(storageName));
-    // let myVar = (textboxParent.children()[1]);
-    // console.log(`xx${myVar}xx`);
-    //  for(let i = 9; i < 18; i++) {
-    //   if(`localStorage.hour-${i}`) {
-    //     `localStorage.setItem("hour-${i}", "")`;
-    //   } else {
-    //     `hour${i}.val(localStorage.getItem('hour-${i}')`
-    //   }
-     }
-      // The following both worked:
-
-      // textboxParent.children().val("Hello");
-
-      // $(event.currentTarget).parent().children().val("Hello") 
-  
-      // console.log(storageName);
-
-    // console.log(textboxParent.attr('id'));
-    // .children[1].val("Working?")
-    
-  // }
-  //?? NEED TO MOVE THIS ?? Probably not
+      styleHours();
+    }
+ // call function to color time block as past, presnt and future based on current time. Will be called  on opening page and also whenever a new item is added to scheduler to reset
   styleHours();
 
-  //call function to display today
+  //call function to display today's date and this function also calls fxn to fill in the text areas with any data stored in local storage
   displayToday();
 
   //eventListeners
-// Delegate event listener to the parent element, <div class='time-block> and use class ='.saveBtn' as 2nd argument in eventListener fxn to target each individual saveBtn. After preventing default this will call the style hours xn to be sure the styling is updated to reflect current time. and it will save user's input to local storage.
-timeBlockArr.on('click', '.saveBtn', function (event) {
-  event.preventDefault();
-  styleHours();
-  saveInput(event);
+  // Delegate event listener to the parent element, <div class='time-block> and use class ='.saveBtn' as 2nd argument in eventListener fxn to target each individual saveBtn. After preventing default this will call the style hours xn to be sure the styling is updated to reflect current time. and it will save user's input to local storage.
+  timeBlockArr.on('click', '.saveBtn', function (event) {
+    event.preventDefault();
+    styleHours();
+    saveInput(event);
+  });
 
-  // get letter from clicked letter button's `data-letter` attribute and use it for display
-
-  // displayLetterEl.text($(event.target).attr('data-letter'));
-  // displayEl.append(displayLetterEl);
-
-});
-
-
- 
-  //
-  // TODO: Add code to get any user input that was saved in localStorage and set
-  // the values of the corresponding textarea elements. HINT: How can the id
-  // attribute of each time-block be used to do this?
-  
-
-
-    // TODO: Add a listener for click events on the save button. This code should
-  // use the id in the containing time-block as a key to save the user input in
-  // local storage. HINT: What does `this` reference in the click listener
-  // function? How can DOM traversal be used to get the "hour-x" id of the
-  // time-block containing the button that was clicked? How might the id be
-  // useful when saving the description in local storage?
-  //
 });
