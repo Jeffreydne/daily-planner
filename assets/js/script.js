@@ -2,17 +2,17 @@
 $(document).ready(function () {
   console.log("Iam working");
  //jQuery DOM variables
- const currentDday = $('#currentDay');
+ const currentDay = $('#currentDay');
  const timeBlockArr = $('.time-block');
  const hour9 = $('#hour-9 .description');
  const hour10 = $('#hour-10 .description');
  const hour11 = $('#hour-11 .description');
  const hour12 = $('#hour-12 .description');
- const hour1 = $('#hour-1 .description');
- const hour2 = $('#hour-2 .description');
- const hour3 = $('#hour-3 .description');
- const hour4 = $('#hour-4 .description');
- const hour5 = $('#hour-5 .description');
+ const hour13 = $('#hour-13 .description');
+ const hour14 = $('#hour-14 .description');
+ const hour15 = $('#hour-15 .description');
+ const hour16 = $('#hour-16 .description');
+ const hour17 = $('#hour-17 .description');
 
  console.log(timeBlockArr);
   //other variables
@@ -22,7 +22,7 @@ $(document).ready(function () {
   // display today's date in header using dayjs() formatting. 
   // CONSIDER CHANGING TO DISPLAY 1ST, 2ND, 3RD, 4TH ETC AS DAY
   function displayToday() {
-  currentDday.text(now.format('dddd, MMMM D'));
+  currentDay.text(now.format('dddd, MMMM D'));
   }
   // 2 functions to replace the class to  past, and/or future - which will be called in fxn styleHours() when the div with class= "time-block" needs to be changed. A jQuery DOM element array is combined with a vanilla JS method because the JS will replace all the members of the class preventing adding classes over previous classes
   function addGreen(indx) {
@@ -35,10 +35,7 @@ $(document).ready(function () {
 
   //CONSIDER ADDING A setInterval FXN TO CHECK FOR A NEW HOUR PERIODICALLY
   function styleHours() {
-    //IS RESET NEEDED?? Probably not -if not delete this comment & reset now = dayjs() below
-
-    //reset now variable to current time then 
-    // use dayjs() saved above in the variable now to find current hour on 24 hour clock
+    //reset now variable (declared above)to current time using dayjs() , then use its format method to find current hour on 24 hour clock
     now = dayjs();
     let hourNow = Number(now.format('H'));
     // if time is < 0900 call addGreen in a for loop to color all time slots green
@@ -81,18 +78,66 @@ $(document).ready(function () {
 
   //saveInput fxn called by button click below. Saves user's input into local Storage
   function saveInput(event) {
-    // console.log("this is input");
+    // To find which button was pressed use event.currentTarget.parent() then store the contents of the associated text area with the name = the id attribute value using a switch statement
+      let textboxParent = $(event.currentTarget).parent();
+
+      let storageName = textboxParent.attr('id')
+      
+      switch (storageName) {
+        case 'hour-9':
+          localStorage.setItem(storageName, hour9.val());
+          break;
+        case 'hour-10':
+          localStorage.setItem(storageName, hour10.val());
+          break;
+        case 'hour-11':
+          localStorage.setItem(storageName, hour11.val());
+          break;
+        case 'hour-12':
+          localStorage.setItem(storageName, hour12.val());
+          break;
+        case 'hour-13':
+          localStorage.setItem(storageName, hour13.val());
+          break;
+        case 'hour-14':
+          localStorage.setItem(storageName, hour14.val());
+          break;
+        case 'hour-15':
+          localStorage.setItem(storageName, hour15.val());
+          break;
+        case 'hour-16':
+          localStorage.setItem(storageName, hour16.val());
+          break;
+        case 'hour-17':
+          localStorage.setItem(storageName, hour17.val());
+          break;
+          default: console.log('something wen wrong');
+      }
 
   
-      $(event.currentTarget).parent().children().val("Hello");
-  
-  
+      console.log(storageName, localStorage.getItem(storageName));
+    // let myVar = (textboxParent.children()[1]);
+    // console.log(`xx${myVar}xx`);
+    //  for(let i = 9; i < 18; i++) {
+    //   if(`localStorage.hour-${i}`) {
+    //     `localStorage.setItem("hour-${i}", "")`;
+    //   } else {
+    //     `hour${i}.val(localStorage.getItem('hour-${i}')`
+    //   }
+     }
+      // The following both worked:
 
-    console.log(event.currentTarget);
+      // textboxParent.children().val("Hello");
+
+      // $(event.currentTarget).parent().children().val("Hello") 
+  
+      // console.log(storageName);
+
+    // console.log(textboxParent.attr('id'));
     // .children[1].val("Working?")
     
-  }
-  //PROBABLY NEED TO MOVE THIS
+  // }
+  //?? NEED TO MOVE THIS ?? Probably not
   styleHours();
 
   //call function to display today
