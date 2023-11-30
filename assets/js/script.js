@@ -132,7 +132,7 @@ $(document).ready(function () {
   displayToday();
 
   //eventListeners
-  // Delegate event listener to the parent element, <div class='time-block> and use class ='.saveBtn' as 2nd argument in eventListener fxn to target each individual saveBtn. After preventing default this will call the style hours xn to be sure the styling is updated to reflect current time. and it will save user's input to local storage.
+  // Delegate event listener to the parent element, <div class='time-block> and use class ='.saveBtn' as 2nd argument in eventListener fxn to target each individual saveBtn. After preventing default this will call the style hours fxn to be sure the styling is updated to reflect current time. and it will save user's input to local storage.
   timeBlockArr.on('click', '.saveBtn', function (event) {
     event.preventDefault();
     styleHours();
