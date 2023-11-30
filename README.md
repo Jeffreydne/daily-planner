@@ -19,7 +19,7 @@ A daily planner for keeping track of tasks to do during a standard 9AM - 6 PM wo
 
 [Visit the Deployed Site](https://jeffreydne.github.io/daily-planner)
 
-This is a webstie designed to be filled in by the user at the start of each day. There are nine 1-hour timeblocks, each of which has a textarea allowing the user to enter tasks or appointments as needed. When the user clicks the save button to the right of the content of the textarea. that content will be stored in local stroage so that when the site is updated the tasks persist. The timeblocks will also be color coded with past times having a gray background, the present hour being red, and future timeblocks being green. The coloring will change with any update, if the hour has changed, using dayjs().
+This is a webstie designed to be filled in by the user at the start of each day. There are nine 1-hour timeblocks, each of which has a textarea allowing the user to enter tasks or appointments as needed. When the user clicks the save button to the right of the content of the textarea, that content will be stored in local stroage so that when the site is updated that task persists. The timeblocks will also be color coded with past times having a gray background, the present hour being red, and future timeblocks being green. The coloring will change with any update, if the hour has changed, using dayjs().
 
 
 ---
@@ -30,15 +30,15 @@ The below JavaScript example shows how I change the class of each timeblock dyna
 
 A series of if/else statments are then used to change the class of each timeblock based on the current time. Most of these if/else stetments are omitted, but the default case, which is shown, is for when the current time is between 1000 and 1659 inclusive. In that case 9 will be subtracted from hourNow to give the appropriate index number to get the current hour's timeblock from the array of div elements containing each timeblock. The array is stored in a jQuery variable with the name timeBlockArr.  
 
-Using the appropriate index number to reflect the current hour's time-block, and the className method, the class is changed to include "present" which will then give it a red background using CSS. Two "for loops" are then run, which will call functions which use the same functionality. The 1st will color all previous times gray, and the 2nd will color all future time blocks green.
+Using the appropriate index number to reflect the current hour's time-block, and the className method, the class is changed to include "present" which will then give it a red background using CSS. Two "for loops" are then run, which will call functions which use the same functionality. The 1st function will color all previous times gray, and the 2nd will color all future time blocks green.
 
 ```JS
   function styleHours() {
-    //reset now variable (declared above)to current time using dayjs() , then use its format method to find current hour on 24 hour clock
+    //reset now variable (declared above) to current time using dayjs(), then use its format method to find current hour on 24 hour clock
     now = dayjs();
     let hourNow = Number(now.format('H'));
     //...
-    // A series of else/if statements will change the class of each time block to reflect if that timeblock is in the current hour, has already passed or is in the future. The final else below applies when the current hour is at least 10AM and no later than 4PM. The addGray and addGreen functions will add the class past and future respectively to the appropriate divs
+    // A series of else/if statements will check the current hour and then change the class of each time block to reflect if that timeblock is in the current hour, has already passed or is in the future. The final else below applies when the current hour is at least 10AM and no later than 4PM. The addGray and addGreen functions will add the class past and future respectively to the appropriate divs
     //...
         else {
       timeBlockArr[hourNow - 9].className = "row time-block present";
@@ -54,7 +54,7 @@ Using the appropriate index number to reflect the current hour's time-block, and
 ```
 The below function shows how my app uses event delegation to allow a single event listener to listen for a click of all 9 textarea save buttons. I pass in the selector ".saveBtn" in the event listener at the bottom, so that when the event is triggered, the currentTarget will be stored as the button itself, even if the user clicks on the icon located within a span within the button. 
 
-The event is then passed to the saveInput fxn and using the jQuery currentTarget() and parent() methods, the division element containing the textarea is saved in a jQuery variable named textboxParent. The jQuery attr() method is then used to determine which timeblock was clicked on by retrieving the value of the id attribute, and storing that value in a variable "storageName". Then the value currently in that textarea is saved into local storage with the key it is saved with being the same as the id for that timeblock.
+The event is then passed to the saveInput fxn and using the jQuery currentTarget() and parent() methods, the division element containing the textarea is saved in a jQuery variable named textboxParent. The jQuery attr() method is then used to determine which timeblock was clicked on, by retrieving the value of the id attribute, and storing that value in a variable "storageName". Then the value currently in that textarea is saved into local storage. The key name it is saved with is the same as the id for that timeblock.
 
 ```JS
     function saveInput(event) {
@@ -67,7 +67,7 @@ The event is then passed to the saveInput fxn and using the jQuery currentTarget
         case 'hour-9':
           localStorage.setItem(storageName, hour9.val());
           break;
-//there is one case for each possible timeblock, only 0900 timeblock (id="hour-9) is shown above. 
+//there is one case for each possible timeblock, only the 0900 timeblock (id="hour-9) is shown above. 
 
 //The event listener triggering the saveInput fxn is shown below
     timeBlockArr.on('click', '.saveBtn', function (event) {
@@ -98,7 +98,7 @@ I developed this website based on a model suggested by the UC Berkeley Extension
 
 * dayjs() is used to get the current time as soon as the application is opened, and the format method is used, along with jQuery DOM manipulation, to display the current date near the top of the page.
 
-* dayjs() is also used in the styleHours fxn. The actual hour of the 24 hour clock is saved in a variable then a series of if/else statements allow the class of each timeslot to be dynamically changed to refect whether it represents a past, current or future hour. Using CSS the updated class will update the background color to gray for any past times, red for the present hour (if applicable) and green for any future hours
+* dayjs() is also used in the styleHours fxn. The actual hour of the 24 hour clock is saved in a variable then a series of if/else statements allow the class of each timeslot to be dynamically changed to refect whether it represents a past, current or future hour. Using CSS the updated class will update the background color to gray for any past times, red for the present hour (if applicable) and green for any future hours.
 
 ---
 
