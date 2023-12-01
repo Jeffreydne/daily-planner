@@ -116,4 +116,4 @@ I developed this website based on a model suggested by the UC Berkeley Extension
 ---
 ## Credits
  The excellent staff at UC Berkeley Extension Full Stack Bootcamp provided the beginings of the table of technology used in this README.md. The basic design and layout of the workday scheduler is provided by UC Berkeley Extension. Starter CSS and HTML is also provided to implement the 9AM to Noon appearance, without any functionality.
- To store scores using localStorage, I borrowed heavily from the web storage tutorial at freeCodeCamp.org, modifying as needed.
+ To store data using localStorage, I borrowed heavily from the web storage tutorial at freeCodeCamp.org, modifying as needed.
