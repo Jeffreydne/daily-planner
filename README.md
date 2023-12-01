@@ -19,7 +19,7 @@ A daily planner for keeping track of tasks to do during a standard 9AM - 6 PM wo
 
 [Visit the Deployed Site](https://jeffreydne.github.io/daily-planner)
 
-This is a webstie designed to be filled in by the user at the start of each day. There are nine 1-hour timeblocks, each of which has a textarea allowing the user to enter tasks or appointments as needed. When the user clicks the save button to the right of the content of the textarea, that content will be stored in local stroage so that when the site is updated that task persists. The timeblocks will also be color coded with past times having a gray background, the present hour being red, and future timeblocks being green. The coloring will change with any update, if the hour has changed, using dayjs().
+This website presents a daily schedule to be filled in by the user at the start of each day. There are nine 1-hour timeblocks, each of which has a textarea allowing the user to enter tasks or appointments as needed. When the user clicks the save button to the right of the content of the textarea, that content will be stored in local stroage so that when the site is updated that task persists. The timeblocks will also be color coded with past times having a gray background, the present hour being red, and future timeblocks being green. The coloring will change with any update, if the hour has changed, using dayjs().
 
 
 ---
